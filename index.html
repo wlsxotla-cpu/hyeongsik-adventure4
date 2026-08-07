@@ -56,17 +56,13 @@
   body{
     font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
     background:
+      radial-gradient(circle at 82% 6%, rgba(255,145,102,.4), transparent 42%),
+      radial-gradient(circle at 82% 6%, rgba(240,198,116,.25), transparent 60%),
+      linear-gradient(to top, rgba(6,19,24,.85) 0%, transparent 26%),
       radial-gradient(ellipse at 30% -10%, var(--backdrop-2), transparent 60%),
-      radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.9), transparent),
-      radial-gradient(1px 1px at 70% 15%, rgba(255,255,255,.7), transparent),
-      radial-gradient(1.5px 1.5px at 40% 65%, rgba(240,198,116,.9), transparent),
-      radial-gradient(1px 1px at 85% 55%, rgba(255,255,255,.6), transparent),
-      radial-gradient(1px 1px at 10% 80%, rgba(255,255,255,.7), transparent),
-      radial-gradient(1.5px 1.5px at 60% 85%, rgba(240,198,116,.7), transparent),
-      radial-gradient(1px 1px at 92% 90%, rgba(255,255,255,.8), transparent),
       var(--backdrop);
-    background-repeat: no-repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, no-repeat;
-    background-size: auto, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, auto;
+    background-repeat: no-repeat;
+    background-size: auto;
     color:var(--text-on-paper);
     min-height:100vh;
     display:flex;
@@ -100,17 +96,18 @@
     padding:34px 26px 26px;
   }
   .washi-tape{
-    position:absolute; top:14px; left:36px; width:12px; height:12px;
-    background:var(--brass-light);
-    clip-path: polygon(50% 0%, 61% 35%, 100% 50%, 61% 65%, 50% 100%, 39% 65%, 0% 50%, 39% 35%);
-    box-shadow: 0 0 14px 3px rgba(240,198,116,.75);
-    opacity:.9;
+    position:absolute; top:10px; left:28px; width:36px; height:36px;
+    border:2px solid var(--brass-light); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:16px; color:var(--brass-light);
+    transform:rotate(-14deg); opacity:.8;
+    box-shadow: 0 0 10px rgba(240,198,116,.3);
   }
   .washi-tape.two{
-    left:auto; right:40px; top:26px; width:8px; height:8px;
-    background:#fff;
-    clip-path: polygon(50% 0%, 61% 35%, 100% 50%, 61% 65%, 50% 100%, 39% 65%, 0% 50%, 39% 35%);
-    box-shadow: 0 0 10px 2px rgba(255,255,255,.8);
+    left:auto; right:30px; top:20px; width:26px; height:26px;
+    font-size:12px; border-color:rgba(255,255,255,.8); color:rgba(255,255,255,.8);
+    transform:rotate(11deg); opacity:.65;
+    box-shadow: 0 0 8px rgba(255,255,255,.25);
   }
   .cover-top{
     display:flex; justify-content:space-between; align-items:baseline;
@@ -429,11 +426,11 @@
 
 <div class="book">
   <div class="cover">
-    <div class="washi-tape"></div>
-    <div class="washi-tape two"></div>
+    <div class="washi-tape">✈</div>
+    <div class="washi-tape two">🌐</div>
     <div class="cover-top">
-      <span class="bank-mark">✨ 형식이의 인생 기록부 <button class="refresh-btn" id="refreshBtn" title="최신 버전 새로 불러오기" aria-label="최신 버전 새로 불러오기">⟳</button></span>
-      <span class="passbook-no mono" id="lifeNo">1번째 생</span>
+      <span class="bank-mark">🛂 형식의 세계여행 패스포트 <button class="refresh-btn" id="refreshBtn" title="최신 버전 새로 불러오기" aria-label="최신 버전 새로 불러오기">⟳</button></span>
+      <span class="passbook-no mono" id="lifeNo">1번째 여권</span>
     </div>
     <h1 class="title diary-font">형식이의 모험 · 글로벌</h1>
     <p class="subtitle">발리 → 몰디브 → 스위스 → 두바이 → 모나코 → 리조트 섬, 환생을 거듭하며 이어가는 세계여행 대장정</p>
@@ -588,12 +585,12 @@
   </div>
 
   <div class="ledger">
-    <div class="ledger-head diary-font">📝 오늘의 일기</div>
+    <div class="ledger-head diary-font">📝 여행 기록</div>
     <div id="logList"></div>
   </div>
 
   <div class="cover-back">
-    <p class="back-note">이 일기는 이 브라우저에 자동 저장됩니다 (localStorage)</p>
+    <p class="back-note">이 여권 정보는 이 브라우저에 자동 저장됩니다 (localStorage)</p>
   </div>
 </div>
 
@@ -857,7 +854,7 @@
     document.getElementById("progressText").textContent = (progress*100).toFixed(1) + "%";
     updateStageText(progress);
     updateAgeDisplay();
-    document.getElementById("lifeNo").textContent = (state.prestige.count + 1) + "번째 생";
+    document.getElementById("lifeNo").textContent = (state.prestige.count + 1) + "번째 여권";
 
     MARKET_KEYS.forEach(renderMarket);
 
@@ -1552,8 +1549,8 @@
       log(s.moveMsg, "gain");
       showToast(s.moveMsg, "move");
       state.modalQueue.push({
-        seal: isFinal ? "완료" : "이사",
-        title: isFinal ? "형식이의 모험, 완주!" : "이사 완료!",
+        seal: isFinal ? "완주" : "입국",
+        title: isFinal ? "형식이의 모험, 완주!" : "입국 완료!",
         desc1: isFinal
           ? `형식이는 마침내 <b>${s.home}</b>의 주인이 되었습니다.`
           : `이제 <b>${s.home}</b>에 삽니다.`,
@@ -1695,7 +1692,7 @@
     setupMarketChartHover(key);
     drawMarketChart(key);
   });
-  log("일기를 시작했습니다. 형식이의 내집마련과 육아를 응원해주세요.", "event");
+  log("여행 기록을 시작합니다. 형식이의 세계여행을 응원해주세요.", "event");
 })();
 </script>
 

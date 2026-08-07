@@ -358,6 +358,20 @@
     .month-gauge::before{ width:32px; height:32px; }
     .month-gauge-label{ font-size:15px; } }
 
+  .asset-pill{
+    position:fixed; top:16px; left:16px; z-index:60;
+    display:flex; align-items:center; gap:6px;
+    background:var(--paper); border:2px solid var(--brass);
+    border-radius:20px; padding:8px 14px 8px 10px;
+    box-shadow: 0 4px 14px rgba(120,80,40,.3);
+    font-weight:800; font-size:14px; color:var(--text-on-paper);
+    max-width:44vw;
+  }
+  .asset-pill-icon{ font-size:16px; line-height:1; flex-shrink:0; }
+  #assetPillAmount{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  @media (max-width:420px){ .asset-pill{ top:10px; left:10px; padding:6px 12px 6px 8px; font-size:12px; }
+    .asset-pill-icon{ font-size:14px; } }
+
   /* ---- Toast ---- */
   .toast{
     position:fixed; top:18px; left:50%; transform:translateX(-50%) translateY(-12px);
@@ -455,6 +469,11 @@
 
 <div class="month-gauge" id="monthGauge" title="이번 달이 지나면 전체 시세 갱신">
   <span class="month-gauge-label">💹</span>
+</div>
+
+<div class="asset-pill" id="assetPill">
+  <span class="asset-pill-icon">💰</span>
+  <span class="mono" id="assetPillAmount">$0</span>
 </div>
 
 <div class="book">
@@ -888,6 +907,7 @@
 
   function render(){
     document.getElementById("moneyDisplay").textContent = Math.floor(state.money).toLocaleString("en-US");
+    document.getElementById("assetPillAmount").textContent = fmt(state.money);
     document.getElementById("incomeDisplay").textContent = "+" + fmt(totalIncomeRate()) + " / 초";
     document.getElementById("clickValueText").textContent = "클릭당 +" + fmt(currentClickValue());
     const goal = currentGoal();

@@ -340,6 +340,24 @@
   .reset-btn:hover{ color:var(--text-on-paper); border-color:rgba(122,92,72,.7); }
   .reset-btn:active{ transform:scale(.97); }
 
+  /* ---- Month gauge (fixed, always visible) ---- */
+  .month-gauge{
+    position:fixed; top:16px; right:16px; z-index:60;
+    width:52px; height:52px; border-radius:50%;
+    background: conic-gradient(var(--brass) var(--progress, 0deg), rgba(184,121,31,.18) 0deg);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 4px 14px rgba(120,80,40,.3);
+    border:2px solid rgba(255,255,255,.7);
+  }
+  .month-gauge::before{
+    content:""; position:absolute; width:40px; height:40px; border-radius:50%;
+    background:var(--paper);
+  }
+  .month-gauge-label{ position:relative; font-size:18px; line-height:1; }
+  @media (max-width:420px){ .month-gauge{ width:42px; height:42px; top:10px; right:10px; }
+    .month-gauge::before{ width:32px; height:32px; }
+    .month-gauge-label{ font-size:15px; } }
+
   /* ---- Toast ---- */
   .toast{
     position:fixed; top:18px; left:50%; transform:translateX(-50%) translateY(-12px);
@@ -435,6 +453,10 @@
 
 <div class="toast" id="toast"><span id="toastText"></span></div>
 
+<div class="month-gauge" id="monthGauge" title="다음 형비디아 시세 갱신까지">
+  <span class="month-gauge-label">💹</span>
+</div>
+
 <div class="book">
   <div class="cover">
     <div class="washi-tape">✈</div>
@@ -502,7 +524,7 @@
     <button class="stamp-btn" id="workBtn">
       <span class="auto-badge" id="autoBadge">자동 출근중</span>
       <span class="stamp-btn-label">출근해서 일하기</span>
-      <span class="stamp-btn-sub mono" id="clickValueText">클릭당 +$10,000</span>
+      <span class="stamp-btn-sub mono" id="clickValueText">클릭당 +$2,500</span>
     </button>
   </div>
 
@@ -636,23 +658,24 @@
   const MARKET_HISTORY_MAX = 40;
   const AGE_MS_PER_YEAR = 28571; // 현실 약 28.6초 = 게임 속 1년. 나이 = 32 + 경과시간/AGE_MS_PER_YEAR는 선형이라, "같은 실제 플레이 시간 기준 40대 완주 -> 60대 완주"는 실제 걸리는 시간과 무관하게 100초/년을 3.5배((60-32)/(40-32))만큼 나누면 됨. 백그라운드 탭은 브라우저가 타이머를 강하게 스로틀링해서 자동수입도 사실상 거의 안 쌓이므로 그 영향은 무시 가능
 
-  const BASE_CLICK_VALUE = 18000; // 환생 리셋 시에도 이 상수를 참조 - 밸런스 값이 하나로만 관리되게
+  const BASE_CLICK_VALUE = 2500; // 환생 리셋 시에도 이 상수를 참조 - 밸런스 값이 하나로만 관리되게. 클릭만으로 밀어붙이지 못하게 대폭 너프 (기존 18,000)
+  const STARTING_MONEY = 500000; // 클릭 너프로 초반이 너무 답답하지 않도록 지급하는 소액 시드머니
 
   const state = {
-    money: 0,
+    money: STARTING_MONEY,
     clickBase: BASE_CLICK_VALUE,
     clickMult: 1,
     cps: 0,
     markets: {
       hsElec: { name:"형비디아", price:10000, minPrice:1000, unit:"주",
                 shares:0, avgPrice:0, dir:1, history:[], historyFlags:[],
-                drift:0, vol:0.05, tickMs:2000, limitCooldownUntil:0, tradeFrozenUntil:0, hint:null, newsText:"", calm:false },
+                drift:0, vol:0.05, tickMs:18000, limitCooldownUntil:0, tradeFrozenUntil:0, hint:null, newsText:"", calm:false },
       gold:   { name:"S&P500", price:450000, minPrice:100000, unit:"주",
                 shares:0, avgPrice:0, dir:1, history:[], historyFlags:[],
-                drift:0.0015, vol:0.015, tickMs:5000, limitCooldownUntil:0, tradeFrozenUntil:0, hint:null, newsText:"", calm:true },
+                drift:0.0015, vol:0.015, tickMs:54000, limitCooldownUntil:0, tradeFrozenUntil:0, hint:null, newsText:"", calm:true },
       realty: { name:"마이애미 임대 콘도", price:50000000, minPrice:5000000, unit:"채",
                 shares:0, avgPrice:0, dir:1, history:[], historyFlags:[],
-                drift:0.0025, vol:0.008, tickMs:4000, limitCooldownUntil:0, tradeFrozenUntil:0, hint:null, newsText:"", calm:true,
+                drift:0.0025, vol:0.008, tickMs:108000, limitCooldownUntil:0, tradeFrozenUntil:0, hint:null, newsText:"", calm:true,
                 rentYieldPerSec:0.00015, totalRentEarned:0 }
     },
     family: { kids:0 },
@@ -667,7 +690,7 @@
     currentHome: "고향의 작은 원룸 거주 · 기혼",
     postGoal: null,
     upgrades: {
-      overtime:   { name:"리모트 야근 수당",   desc:"클릭당 수입 +$27,000",     baseCost:300000,    cost:0, level:0, scale:1.18, type:"click", value:27000 },
+      overtime:   { name:"리모트 야근 수당",   desc:"클릭당 수입 +$3,500",     baseCost:300000,    cost:0, level:0, scale:1.18, type:"click", value:3500 },
       autoclick:  { name:"자동 송금 시스템", desc:"2.5초마다 자동으로 일합니다 (클릭 1회와 동일)", baseCost:3000000, cost:0, level:0, scale:1, type:"auto", value:1, maxLevel:1 },
       delivery:   { name:"글로벌 배달 플랫폼",   desc:"자동 수입 +$27,000/초",     baseCost:1800000,   cost:0, level:0, scale:1.2,  type:"cps",   value:27000 },
       savings:    { name:"달러 예금 이자",     desc:"자동 수입 +$108,000/초",    baseCost:7500000,   cost:0, level:0, scale:1.2,  type:"cps",   value:108000 },
@@ -992,7 +1015,7 @@
     if(!state.everReachedFinal) return;
     const ok = window.confirm("정말 다시 태어날까요? 현재 자산·업그레이드·투자·나이가 전부 초기화되고, 대신 영구 배율 보너스가 영원히 남습니다.");
     if(!ok) return;
-    state.money = 0;
+    state.money = STARTING_MONEY;
     state.clickBase = BASE_CLICK_VALUE;
     state.clickMult = 1;
     state.cps = 0;
@@ -1203,11 +1226,23 @@
     return true;
   }
 
+  let hsElecNextTickAt = Date.now() + state.markets.hsElec.tickMs;
+
   function marketTickCycle(key){
     const fired = maybeLimitEvent(key);
     if(!fired) tickMarket(key);
     drawMarketChart(key);
     render();
+    if(key === "hsElec") hsElecNextTickAt = Date.now() + state.markets.hsElec.tickMs;
+  }
+
+  function updateMonthGauge(){
+    const el = document.getElementById("monthGauge");
+    if(!el) return;
+    const tickMs = state.markets.hsElec.tickMs;
+    const remainMs = hsElecNextTickAt - Date.now();
+    const progress = Math.max(0, Math.min(1, 1 - remainMs / tickMs));
+    el.style.setProperty("--progress", (progress * 360).toFixed(1) + "deg");
   }
 
   const BULLISH_NEWS = n => [`${n}, 실적 기대감 확산`, `${n}, 신규 계약 소식`, `${n} 관련 호재 포착`];
@@ -1523,6 +1558,7 @@
   setInterval(updateLottoButton, 150);
   setInterval(()=> MARKET_KEYS.forEach(renderMarket), 500);
   setInterval(updateAgeDisplay, 1000);
+  setInterval(updateMonthGauge, 100);
 
   const events = [
     { text:"명절 상여금이 들어왔다", type:"gain", amountFn: s => Math.max(50000, s.money*0.02) },

@@ -10,44 +10,44 @@
 <style>
   :root{
     color-scheme: dark;
-    --ink-900:#f3efff;
-    --ink-700:#d8cdf7;
-    --ink-600:#b3a3e8;
-    --paper:#241a45;
-    --paper-line:#463a75;
-    --paper-shadow:#2e2158;
+    --ink-900:#fdf1e0;
+    --ink-700:#f0d9c8;
+    --ink-600:#d9a98e;
+    --paper:#3a2038;
+    --paper-line:#6b4256;
+    --paper-shadow:#2c1826;
     --brass:#f0c674;
     --brass-light:#ffe4a3;
     --mint:#4ade80;
     --mint-light:#8ff0b4;
     --ink-red:#f87171;
     --ink-green:#4ade80;
-    --lavender:#b8a6e0;
+    --lavender:#ff9166;
     --yellow:#ffd873;
-    --backdrop:#150f2e;
-    --backdrop-2:#0c0820;
-    --text-on-paper:#ece6ff;
-    --text-sub:#9d93c2;
+    --backdrop:#0b2430;
+    --backdrop-2:#061318;
+    --text-on-paper:#f7e9da;
+    --text-sub:#c9a8a0;
     --shadow: 0 20px 50px rgba(0,0,0,.55), 0 0 40px rgba(240,198,116,.08);
   }
   :root[data-theme="dark"]{
-    --backdrop:#150f2e;
-    --backdrop-2:#0c0820;
-    --paper:#241a45;
-    --paper-line:#463a75;
-    --paper-shadow:#2e2158;
-    --text-on-paper:#ece6ff;
-    --text-sub:#9d93c2;
+    --backdrop:#0b2430;
+    --backdrop-2:#061318;
+    --paper:#3a2038;
+    --paper-line:#6b4256;
+    --paper-shadow:#2c1826;
+    --text-on-paper:#f7e9da;
+    --text-sub:#c9a8a0;
     --shadow: 0 20px 50px rgba(0,0,0,.55), 0 0 40px rgba(240,198,116,.08);
   }
   :root[data-theme="light"]{
-    --backdrop:#150f2e;
-    --backdrop-2:#0c0820;
-    --paper:#241a45;
-    --paper-line:#463a75;
-    --paper-shadow:#2e2158;
-    --text-on-paper:#ece6ff;
-    --text-sub:#9d93c2;
+    --backdrop:#0b2430;
+    --backdrop-2:#061318;
+    --paper:#3a2038;
+    --paper-line:#6b4256;
+    --paper-shadow:#2c1826;
+    --text-on-paper:#f7e9da;
+    --text-sub:#c9a8a0;
     --shadow: 0 20px 50px rgba(0,0,0,.55), 0 0 40px rgba(240,198,116,.08);
   }
 
@@ -95,8 +95,8 @@
     border-radius:26px 26px 0 0;
     background:
       radial-gradient(ellipse at 75% -10%, rgba(240,198,116,.28), transparent 55%),
-      linear-gradient(160deg, #2c2158, #130d28 78%);
-    color:#f3efff;
+      linear-gradient(160deg, #4a2438, #0d1f24 78%);
+    color:#fdf1e0;
     padding:34px 26px 26px;
   }
   .washi-tape{
@@ -121,7 +121,7 @@
   .refresh-btn{
     display:inline-flex; align-items:center; justify-content:center;
     width:22px; height:22px; border-radius:50%; margin-left:8px;
-    background:rgba(255,255,255,.1); border:1px solid rgba(240,198,116,.4); color:#f3efff;
+    background:rgba(255,255,255,.1); border:1px solid rgba(240,198,116,.4); color:#fdf1e0;
     font-size:12px; line-height:1; cursor:pointer; padding:0;
   }
   .refresh-btn:hover{ background:rgba(255,255,255,.2); }
@@ -133,7 +133,7 @@
     margin:0 0 6px; font-size:30px; font-weight:700; letter-spacing:-.01em; text-wrap:balance;
     text-shadow: 0 0 24px rgba(240,198,116,.35);
   }
-  .subtitle{ margin:0 0 20px; font-size:13.5px; color:#c9bef0; }
+  .subtitle{ margin:0 0 20px; font-size:13.5px; color:#f0c9a8; }
   .holder-row{ display:flex; }
   .holder{
     display:flex; align-items:center; gap:10px;
@@ -141,8 +141,8 @@
     border-radius:14px; padding:10px 14px;
   }
   .holder-avatar{ font-size:26px; }
-  .holder-name{ font-weight:700; font-size:13px; color:#f3efff; }
-  .holder-sub{ font-size:11.5px; color:#c9bef0; margin-top:2px; }
+  .holder-name{ font-weight:700; font-size:13px; color:#fdf1e0; }
+  .holder-sub{ font-size:11.5px; color:#f0c9a8; margin-top:2px; }
 
   .perforation{
     height:16px;
@@ -206,17 +206,17 @@
     padding:22px; border-radius:18px;
     border:none;
     background:linear-gradient(180deg, var(--brass-light), var(--brass));
-    color:#1a1233; font-family:inherit;
+    color:#2a1520; font-family:inherit;
     box-shadow: inset 0 0 0 1px rgba(255,255,255,.35), 0 10px 24px rgba(240,198,116,.4);
     transition:transform .08s ease;
   }
   .stamp-btn:active{ transform:scale(.97); }
   .stamp-btn-label{ font-size:17px; font-weight:700; letter-spacing:.01em; }
-  .stamp-btn-sub{ font-size:11.5px; color:#4a3f73; font-family: ui-monospace, Consolas, monospace; }
+  .stamp-btn-sub{ font-size:11.5px; color:#5c3a30; font-family: ui-monospace, Consolas, monospace; }
   .auto-badge{
     position:absolute; top:10px; right:12px; display:none;
     font-size:10px; font-weight:700; letter-spacing:.03em;
-    background:#1a1233; color:#ffe4a3; padding:3px 9px; border-radius:20px;
+    background:#2a1520; color:#ffe4a3; padding:3px 9px; border-radius:20px;
   }
   .auto-badge.on{ display:inline-block; }
 
@@ -255,7 +255,7 @@
   .mkt-chart{ display:block; width:100%; height:64px; cursor:crosshair; }
   .stock-tooltip{
     position:absolute; top:-4px; left:0; transform:translate(-50%,-100%);
-    background:#0c0820; color:#fff3e6; font-size:11px; font-weight:600;
+    background:#14232a; color:#fff3e6; font-size:11px; font-weight:600;
     padding:4px 8px; border-radius:6px; white-space:nowrap; pointer-events:none;
     font-family: ui-monospace, Consolas, monospace; opacity:0; transition:opacity .1s ease;
   }
@@ -278,7 +278,7 @@
   .upg-desc{ display:block; font-size:10.5px; color:var(--text-sub); margin-top:1px; }
   .upg-right{ display:flex; flex-direction:column; align-items:flex-end; gap:2px; }
   .buy-btn{
-    padding:8px 12px; border:none; border-radius:10px; background:var(--brass); color:#1a1233;
+    padding:8px 12px; border:none; border-radius:10px; background:var(--brass); color:#2a1520;
     font-weight:700; font-size:11.5px; cursor:pointer; white-space:nowrap; font-family: ui-monospace, Consolas, monospace;
   }
   .buy-btn:disabled{ background:transparent; color:var(--text-sub); border:1px dashed var(--paper-line); cursor:not-allowed; }
@@ -305,9 +305,9 @@
   }
   .modal-bg.show{ display:flex; }
   .deed{
-    position:relative; background:#1c1440; border:1px solid var(--paper-line);
+    position:relative; background:#2a1826; border:1px solid var(--paper-line);
     border-radius:4px; padding:44px 30px 30px; max-width:380px; text-align:center;
-    box-shadow:0 30px 70px rgba(0,0,0,.55), 0 0 0 10px #1c1440, 0 0 0 11px var(--paper-line), 0 0 40px rgba(240,198,116,.12);
+    box-shadow:0 30px 70px rgba(0,0,0,.55), 0 0 0 10px #2a1826, 0 0 0 11px var(--paper-line), 0 0 40px rgba(240,198,116,.12);
     transform:rotate(-1.2deg);
   }
   .deed::before{
@@ -356,7 +356,7 @@
   .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
   .toast.warn{ background:linear-gradient(135deg,#ef6461,#d54e4b); }
   .toast.gain{ background:linear-gradient(135deg,#3fa980,#2c8867); }
-  .toast.move{ background:linear-gradient(135deg,var(--brass),#b8862f); color:#1a1233; }
+  .toast.move{ background:linear-gradient(135deg,var(--brass),#b8862f); color:#2a1520; }
   @media (prefers-reduced-motion: reduce){ .toast{ transition:opacity .01s linear; } }
 
   /* ---- Casino slot machine ---- */
@@ -439,7 +439,7 @@
     <p class="subtitle">발리 → 몰디브 → 스위스 → 두바이 → 모나코 → 리조트 섬, 환생을 거듭하며 이어가는 세계여행 대장정</p>
     <div class="holder-row">
       <div class="holder">
-        <span class="holder-avatar">🧑‍💼</span>
+        <span class="holder-avatar" id="holderAvatar">🧑‍💼</span>
         <div>
           <div class="holder-name" id="holderName">주인공 · 형식 (32세 0개월)</div>
           <div class="holder-sub" id="statusSub">고향의 작은 원룸 거주 · 기혼</div>
@@ -490,7 +490,7 @@
   </div>
 
   <div class="ledger">
-    <div class="ledger-head diary-font">⭐ 우리집 습관 스티커</div>
+    <div class="ledger-head diary-font">⭐ 나의 글로벌 루틴</div>
     <div id="upgradeList"></div>
   </div>
 
@@ -503,7 +503,7 @@
   </div>
 
   <div class="ledger">
-    <div class="ledger-head diary-font">📈 투자 · 형디아</div>
+    <div class="ledger-head diary-font">📈 투자 · 형비디아</div>
     <div class="insert-card" style="padding:14px 14px 16px;">
       <div class="stock-row">
         <span class="stock-price mono" id="hsElecPrice">$10,000</span>
@@ -626,7 +626,7 @@
     clickMult: 1,
     cps: 0,
     markets: {
-      hsElec: { name:"형디아", price:10000, minPrice:1000, unit:"주",
+      hsElec: { name:"형비디아", price:10000, minPrice:1000, unit:"주",
                 shares:0, avgPrice:0, dir:1, history:[], historyFlags:[],
                 drift:0, vol:0.05, tickMs:2000, limitCooldownUntil:0, tradeFrozenUntil:0, hint:null, newsText:"", calm:false },
       gold:   { name:"S&P500", price:450000, minPrice:100000, unit:"주",
@@ -635,7 +635,7 @@
       realty: { name:"마이애미 임대 콘도", price:50000000, minPrice:5000000, unit:"채",
                 shares:0, avgPrice:0, dir:1, history:[], historyFlags:[],
                 drift:0.0025, vol:0.008, tickMs:4000, limitCooldownUntil:0, tradeFrozenUntil:0, hint:null, newsText:"", calm:true,
-                rentYieldPerSec:0.0004, totalRentEarned:0 }
+                rentYieldPerSec:0.00015, totalRentEarned:0 }
     },
     family: { kids:0 },
     modalQueue: [],
@@ -649,15 +649,15 @@
     currentHome: "고향의 작은 원룸 거주 · 기혼",
     postGoal: null,
     upgrades: {
-      overtime:   { name:"야근 수당",   desc:"클릭당 수입 +$27,000",     baseCost:300000,    cost:0, level:0, scale:1.18, type:"click", value:27000 },
-      autoclick:  { name:"자동 출납기", desc:"2.5초마다 자동으로 일합니다 (클릭 1회와 동일)", baseCost:3000000, cost:0, level:0, scale:1, type:"auto", value:1, maxLevel:1 },
-      delivery:   { name:"배달 부업",   desc:"자동 수입 +$27,000/초",     baseCost:1800000,   cost:0, level:0, scale:1.2,  type:"cps",   value:27000 },
-      savings:    { name:"예금 이자",   desc:"자동 수입 +$108,000/초",    baseCost:7500000,   cost:0, level:0, scale:1.2,  type:"cps",   value:108000 },
-      lecture:    { name:"재테크 강의", desc:"모든 수입 x1.3배",           baseCost:45000000,  cost:0, level:0, scale:1.8,  type:"mult",  value:0.3, maxLevel:6 },
-      promotion:  { name:"승진",       desc:"자동 수입 +$1,080,000/초",   baseCost:210000000, cost:0, level:0, scale:1.21, type:"cps",   value:1080000 },
-      executive:  { name:"임원 승진",   desc:"자동 수입 +$2,700,000/초",   baseCost:450000000, cost:0, level:0, scale:1.22, type:"cps",   value:2700000 },
-      realestate: { name:"부동산 스터디", desc:"자동 수입 +$5,400,000/초", baseCost:900000000, cost:0, level:0, scale:1.21, type:"cps",   value:5400000 },
-      landlord:   { name:"건물주",     desc:"자동 수입 +$27,000,000/초",  baseCost:3600000000,cost:0, level:0, scale:1.22, type:"cps",   value:27000000 }
+      overtime:   { name:"리모트 야근 수당",   desc:"클릭당 수입 +$27,000",     baseCost:300000,    cost:0, level:0, scale:1.18, type:"click", value:27000 },
+      autoclick:  { name:"자동 송금 시스템", desc:"2.5초마다 자동으로 일합니다 (클릭 1회와 동일)", baseCost:3000000, cost:0, level:0, scale:1, type:"auto", value:1, maxLevel:1 },
+      delivery:   { name:"글로벌 배달 플랫폼",   desc:"자동 수입 +$27,000/초",     baseCost:1800000,   cost:0, level:0, scale:1.2,  type:"cps",   value:27000 },
+      savings:    { name:"달러 예금 이자",     desc:"자동 수입 +$108,000/초",    baseCost:7500000,   cost:0, level:0, scale:1.2,  type:"cps",   value:108000 },
+      lecture:    { name:"온라인 재테크 클래스", desc:"모든 수입 x1.3배",           baseCost:45000000,  cost:0, level:0, scale:1.8,  type:"mult",  value:0.3, maxLevel:6 },
+      promotion:  { name:"해외 지사 승진",     desc:"자동 수입 +$1,080,000/초",   baseCost:210000000, cost:0, level:0, scale:1.21, type:"cps",   value:1080000 },
+      executive:  { name:"글로벌 임원 승진",   desc:"자동 수입 +$2,700,000/초",   baseCost:450000000, cost:0, level:0, scale:1.22, type:"cps",   value:2700000 },
+      realestate: { name:"해외부동산 스터디", desc:"자동 수입 +$5,400,000/초", baseCost:900000000, cost:0, level:0, scale:1.21, type:"cps",   value:5400000 },
+      landlord:   { name:"글로벌 건물주",     desc:"자동 수입 +$27,000,000/초",  baseCost:3600000000,cost:0, level:0, scale:1.22, type:"cps",   value:27000000 }
     },
     autoClick:false,
     modalOpen:false,
@@ -805,11 +805,20 @@
   function finalAchievementAge(){
     return Math.max(MIN_FINAL_AGE, currentAge());
   }
+  function avatarForAge(age){
+    if(age < 35) return "🧑‍💼";
+    if(age < 50) return "🧑";
+    if(age < 65) return "🧔";
+    return "👴";
+  }
+
   function updateAgeDisplay(){
     const el = document.getElementById("holderName");
     if(!el) return;
     const a = ageDetail();
     el.textContent = `주인공 · 형식 (${a.years}세 ${a.months}개월)`;
+    const avatarEl = document.getElementById("holderAvatar");
+    if(avatarEl) avatarEl.textContent = avatarForAge(a.years);
   }
 
   function updateStageText(progress){
@@ -832,7 +841,7 @@
   function currentCps(){ return state.cps * state.clickMult * currentPrestigeMult() * currentInvestMult(); }
   function realtyRentRate(){
     const r = state.markets.realty;
-    return r.shares > 0 ? r.price * r.shares * r.rentYieldPerSec : 0;
+    return r.shares > 0 ? r.avgPrice * r.shares * r.rentYieldPerSec : 0;
   }
   function totalIncomeRate(){ return currentCps() + realtyRentRate(); }
 
@@ -1477,8 +1486,8 @@
     { text:"⚠️ 부모님이 편찮으셔서 병원비를 보냈다", type:"loss", toast:true, amountFn: s => Math.max(200000, s.money*0.05) },
     { text:"⚠️ 형식이가 몸살로 병원비를 지출했다", type:"loss", toast:true, amountFn: s => Math.max(100000, s.money*0.03) },
     { text:"⚠️ 교통사고를 당해 치료비가 나갔다", type:"loss", toast:true, amountFn: s => Math.max(300000, s.money*0.06) },
-    { text:"💸 형식이가 대출까지 받아 형디아에 몰빵했다가 상한가를 맞았다", type:"gain", toast:true, amountFn: s => Math.max(300000, s.money*0.08) },
-    { text:"💸 형식이가 대출까지 받아 형디아에 몰빵했다가 하한가를 맞았다", type:"loss", toast:true, amountFn: s => Math.max(300000, s.money*0.08) }
+    { text:"💸 형식이가 대출까지 받아 형비디아에 몰빵했다가 상한가를 맞았다", type:"gain", toast:true, amountFn: s => Math.max(300000, s.money*0.08) },
+    { text:"💸 형식이가 대출까지 받아 형비디아에 몰빵했다가 하한가를 맞았다", type:"loss", toast:true, amountFn: s => Math.max(300000, s.money*0.08) }
   ];
   const familyEvents = [
     { text:"아이 어린이집 특별활동비를 냈다", type:"loss", amountFn: s => Math.max(30000, s.money*0.012) },

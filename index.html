@@ -9,46 +9,46 @@
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <style>
   :root{
-    color-scheme: dark;
-    --ink-900:#fdf1e0;
-    --ink-700:#f0d9c8;
-    --ink-600:#d9a98e;
-    --paper:#4a2a1e;
-    --paper-line:#7a4f38;
-    --paper-shadow:#341c14;
-    --brass:#f0c674;
-    --brass-light:#ffe4a3;
-    --mint:#4ade80;
-    --mint-light:#8ff0b4;
-    --ink-red:#f87171;
-    --ink-green:#4ade80;
-    --lavender:#ff9166;
-    --yellow:#ffd873;
-    --backdrop:#0b2430;
-    --backdrop-2:#061318;
-    --text-on-paper:#f7e9da;
-    --text-sub:#c9a8a0;
-    --shadow: 0 20px 50px rgba(0,0,0,.55), 0 0 40px rgba(240,198,116,.08);
+    color-scheme: light;
+    --ink-900:#2a1810;
+    --ink-700:#4a2f1e;
+    --ink-600:#6b4530;
+    --paper:#fff8ef;
+    --paper-line:#e8d4bc;
+    --paper-shadow:#ffedd4;
+    --brass:#b8791f;
+    --brass-light:#e8a83c;
+    --mint:#16a34a;
+    --mint-light:#4ade80;
+    --ink-red:#dc2626;
+    --ink-green:#16a34a;
+    --lavender:#e8602a;
+    --yellow:#c98a12;
+    --backdrop:#ffe9d2;
+    --backdrop-2:#fff6ea;
+    --text-on-paper:#2a1810;
+    --text-sub:#7a5c48;
+    --shadow: 0 20px 50px rgba(120,80,40,.18), 0 0 30px rgba(184,121,31,.1);
   }
   :root[data-theme="dark"]{
-    --backdrop:#0b2430;
-    --backdrop-2:#061318;
-    --paper:#4a2a1e;
-    --paper-line:#7a4f38;
-    --paper-shadow:#341c14;
-    --text-on-paper:#f7e9da;
-    --text-sub:#c9a8a0;
-    --shadow: 0 20px 50px rgba(0,0,0,.55), 0 0 40px rgba(240,198,116,.08);
+    --backdrop:#ffe9d2;
+    --backdrop-2:#fff6ea;
+    --paper:#fff8ef;
+    --paper-line:#e8d4bc;
+    --paper-shadow:#ffedd4;
+    --text-on-paper:#2a1810;
+    --text-sub:#7a5c48;
+    --shadow: 0 20px 50px rgba(120,80,40,.18), 0 0 30px rgba(184,121,31,.1);
   }
   :root[data-theme="light"]{
-    --backdrop:#0b2430;
-    --backdrop-2:#061318;
-    --paper:#4a2a1e;
-    --paper-line:#7a4f38;
-    --paper-shadow:#341c14;
-    --text-on-paper:#f7e9da;
-    --text-sub:#c9a8a0;
-    --shadow: 0 20px 50px rgba(0,0,0,.55), 0 0 40px rgba(240,198,116,.08);
+    --backdrop:#ffe9d2;
+    --backdrop-2:#fff6ea;
+    --paper:#fff8ef;
+    --paper-line:#e8d4bc;
+    --paper-shadow:#ffedd4;
+    --text-on-paper:#2a1810;
+    --text-sub:#7a5c48;
+    --shadow: 0 20px 50px rgba(120,80,40,.18), 0 0 30px rgba(184,121,31,.1);
   }
 
   *{ box-sizing:border-box; }
@@ -56,9 +56,8 @@
   body{
     font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
     background:
-      radial-gradient(circle at 82% 6%, rgba(255,145,102,.4), transparent 42%),
-      radial-gradient(circle at 82% 6%, rgba(240,198,116,.25), transparent 60%),
-      linear-gradient(to top, rgba(6,19,24,.85) 0%, transparent 26%),
+      radial-gradient(circle at 82% 6%, rgba(255,180,102,.55), transparent 42%),
+      radial-gradient(circle at 82% 6%, rgba(240,198,116,.35), transparent 60%),
       radial-gradient(ellipse at 30% -10%, var(--backdrop-2), transparent 60%),
       var(--backdrop);
     background-repeat: no-repeat;
@@ -91,23 +90,23 @@
     border-radius:26px 26px 0 0;
     background:
       radial-gradient(ellipse at 75% -10%, rgba(240,198,116,.28), transparent 55%),
-      linear-gradient(160deg, #6b3826, #0d1f24 78%);
-    color:#fdf1e0;
+      linear-gradient(160deg, #ffdfb0, #fff3e0 78%);
+    color:#2a1810;
     padding:34px 26px 26px;
   }
   .washi-tape{
     position:absolute; top:10px; left:28px; width:36px; height:36px;
-    border:2px solid var(--brass-light); border-radius:50%;
+    border:2px solid var(--brass); border-radius:50%;
     display:flex; align-items:center; justify-content:center;
-    font-size:16px; color:var(--brass-light);
-    transform:rotate(-14deg); opacity:.8;
-    box-shadow: 0 0 10px rgba(240,198,116,.3);
+    font-size:16px; color:var(--brass);
+    transform:rotate(-14deg); opacity:.85;
+    box-shadow: 0 0 10px rgba(184,121,31,.25);
   }
   .washi-tape.two{
     left:auto; right:30px; top:20px; width:26px; height:26px;
-    font-size:12px; border-color:rgba(255,255,255,.8); color:rgba(255,255,255,.8);
-    transform:rotate(11deg); opacity:.65;
-    box-shadow: 0 0 8px rgba(255,255,255,.25);
+    font-size:12px; border-color:rgba(42,24,16,.4); color:rgba(42,24,16,.6);
+    transform:rotate(11deg); opacity:.7;
+    box-shadow: 0 0 8px rgba(42,24,16,.12);
   }
   .cover-top{
     display:flex; justify-content:space-between; align-items:baseline;
@@ -118,10 +117,10 @@
   .refresh-btn{
     display:inline-flex; align-items:center; justify-content:center;
     width:22px; height:22px; border-radius:50%; margin-left:8px;
-    background:rgba(255,255,255,.1); border:1px solid rgba(240,198,116,.4); color:#fdf1e0;
+    background:rgba(0,0,0,.05); border:1px solid rgba(184,121,31,.4); color:#2a1810;
     font-size:12px; line-height:1; cursor:pointer; padding:0;
   }
-  .refresh-btn:hover{ background:rgba(255,255,255,.2); }
+  .refresh-btn:hover{ background:rgba(0,0,0,.1); }
   .refresh-btn:active{ transform:scale(.9); }
   .refresh-btn.spinning{ animation:spin .6s linear; }
   @keyframes spin{ to{ transform:rotate(360deg); } }
@@ -131,16 +130,16 @@
     color: var(--brass-light);
     text-shadow: 0 0 14px rgba(240,198,116,.22);
   }
-  .subtitle{ margin:0 0 20px; font-size:13.5px; color:#f0c9a8; }
+  .subtitle{ margin:0 0 20px; font-size:13.5px; color:#6b4530; }
   .holder-row{ display:flex; }
   .holder{
     display:flex; align-items:center; gap:10px;
-    background:rgba(255,255,255,.06); border:1px solid rgba(240,198,116,.35);
+    background:rgba(255,255,255,.55); border:1px solid rgba(184,121,31,.35);
     border-radius:14px; padding:10px 14px;
   }
   .holder-avatar{ font-size:26px; }
-  .holder-name{ font-weight:700; font-size:13px; color:#fdf1e0; }
-  .holder-sub{ font-size:11.5px; color:#f0c9a8; margin-top:2px; }
+  .holder-name{ font-weight:700; font-size:13px; color:#2a1810; }
+  .holder-sub{ font-size:11.5px; color:#6b4530; margin-top:2px; }
 
   .perforation{
     height:16px;
@@ -174,7 +173,7 @@
   .gauge-track{
     position:relative; height:16px; border-radius:10px;
     background:repeating-linear-gradient(90deg, var(--paper-line) 0 1px, transparent 1px 10%);
-    background-color:#fffdf8; border:1px solid var(--paper-line);
+    background-color:#f5e7d2; border:1px solid var(--paper-line);
     overflow:visible;
   }
   .gauge-fill{
@@ -303,9 +302,9 @@
   }
   .modal-bg.show{ display:flex; }
   .deed{
-    position:relative; background:#3a1f15; border:1px solid var(--paper-line);
+    position:relative; background:#fff3e0; border:1px solid var(--paper-line);
     border-radius:4px; padding:44px 30px 30px; max-width:380px; text-align:center;
-    box-shadow:0 30px 70px rgba(0,0,0,.55), 0 0 0 10px #3a1f15, 0 0 0 11px var(--paper-line), 0 0 40px rgba(240,198,116,.12);
+    box-shadow:0 30px 70px rgba(120,80,40,.25), 0 0 0 10px #fff3e0, 0 0 0 11px var(--paper-line), 0 0 40px rgba(184,121,31,.15);
     transform:rotate(-1.2deg);
   }
   .deed::before{
@@ -335,10 +334,10 @@
 
   .reset-wrap{ text-align:center; margin-top:20px; }
   .reset-btn{
-    background:none; border:1px dashed rgba(157,147,194,.4); color:var(--text-sub);
+    background:none; border:1px dashed rgba(122,92,72,.4); color:var(--text-sub);
     font-size:12px; padding:8px 16px; border-radius:20px; cursor:pointer; font-family:inherit;
   }
-  .reset-btn:hover{ color:var(--text-on-paper); border-color:rgba(157,147,194,.7); }
+  .reset-btn:hover{ color:var(--text-on-paper); border-color:rgba(122,92,72,.7); }
   .reset-btn:active{ transform:scale(.97); }
 
   /* ---- Toast ---- */
@@ -367,6 +366,17 @@
   .slot-reel.spinning{ animation: reelBlur .08s linear infinite; }
   @keyframes reelBlur{ 0%{ filter:blur(0px); } 50%{ filter:blur(2.5px); } 100%{ filter:blur(0px); } }
   @media (prefers-reduced-motion: reduce){ .slot-reel.spinning{ animation:none; opacity:.6; } }
+
+  .bet-row{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
+  .bet-label{ font-size:12.5px; font-weight:700; color:var(--text-sub); }
+  .bet-presets{ display:flex; gap:6px; }
+  .bet-btn{
+    padding:6px 10px; border-radius:8px; border:1px solid var(--paper-line);
+    background:transparent; color:var(--text-on-paper); font-weight:700; font-size:11.5px;
+    cursor:pointer; font-family:inherit;
+  }
+  .bet-btn:active{ transform:scale(.96); }
+  .bet-btn.allin{ border-color:var(--ink-red); color:var(--ink-red); }
 
   /* ---- Lotto ---- */
   .lotto-btn{
@@ -472,6 +482,15 @@
       <span class="slot-reel" id="slotReel1">🍒</span>
       <span class="slot-reel" id="slotReel2">🍇</span>
       <span class="slot-reel" id="slotReel3">🔔</span>
+    </div>
+    <div class="bet-row">
+      <span class="bet-label">베팅액 <span class="mono" id="betAmountText">$10,000</span></span>
+      <div class="bet-presets">
+        <button class="bet-btn" data-bet="min">최소</button>
+        <button class="bet-btn" data-bet="0.1">10%</button>
+        <button class="bet-btn" data-bet="0.5">50%</button>
+        <button class="bet-btn allin" data-bet="1">🎲 올인</button>
+      </div>
     </div>
     <button class="lotto-btn" id="lottoBtn">🎰 슬롯머신 돌리기 ($10,000)</button>
     <div class="lotto-result" id="lottoResult">릴이 멈추길 기다리는 중...</div>
@@ -615,7 +634,7 @@
 
   const SAVE_KEY = "hyeongsik_adventure_global_v1";
   const MARKET_HISTORY_MAX = 40;
-  const AGE_MS_PER_YEAR = 100 * 1000; // 현실 100초 = 게임 속 1년. 시뮬레이션 기준 평균 완주 나이 50~60대로 재보정 (상한 없음)
+  const AGE_MS_PER_YEAR = 28571; // 현실 약 28.6초 = 게임 속 1년. 프레스티지판 실측 완주 나이가 40대였던 것을 60대로 늦추기 위해 100초/년 대비 3.5배 빠르게 나이 들도록 재조정 (그래야 캐릭터 노화 연출(🧔·👴)도 실제로 보임)
   const BASE_CLICK_VALUE = 18000; // 환생 리셋 시에도 이 상수를 참조 - 밸런스 값이 하나로만 관리되게
 
   const state = {
@@ -1283,10 +1302,10 @@
       const x = xAt(i), y = yAt(p);
       ctx.beginPath();
       ctx.arc(x, y, 5, 0, Math.PI * 2);
-      ctx.fillStyle = "#fff4d6";
+      ctx.fillStyle = "#ffcf6b";
       ctx.fill();
       ctx.lineWidth = 2.5;
-      ctx.strokeStyle = "#f0c674";
+      ctx.strokeStyle = "#8a5a12";
       ctx.stroke();
     });
 
@@ -1374,30 +1393,48 @@
 
   document.getElementById("workBtn").addEventListener("click", doWork);
 
-  // ---- Casino slot machine ---- (1회 플레이, 릴이 실제로 돌아가는 연출 포함)
-  const LOTTO_COST = 10000;
+  // ---- Casino slot machine ---- (베팅액 가변, 릴이 실제로 돌아가는 연출 포함)
+  const LOTTO_MIN_BET = 10000;
   const SLOT_SYMBOLS = ["🍒","🍇","🔔","💎","7️⃣"];
   const SLOT_REEL_IDS = ["slotReel1","slotReel2","slotReel3"];
   const SPIN_STOP_DELAYS = [500, 850, 1250];
   const SPIN_INTERVAL_MS = 70;
   const LOTTO_COOLDOWN_MS = 1400;
   const LOTTO_TIERS = [
-    { label:"🎰 잭팟", prize:100000000, p:1/50000, combo:["7️⃣","7️⃣","7️⃣"] },
-    { label:"💎 2등",  prize:8000000,   p:1/5000,  combo:["💎","💎","💎"] },
-    { label:"🔔 3등",  prize:500000,    p:1/300,   combo:["🔔","🔔","🔔"] },
-    { label:"🍇 4등",  prize:30000,     p:1/25,    combo:["🍇","🍇","🍇"] },
-    { label:"🍒 5등",  prize:5000,      p:1/5,     combo:["🍒","🍒","🍇"] }
+    { label:"🎰 잭팟", name:"잭팟", mult:10000, p:1/50000, combo:["7️⃣","7️⃣","7️⃣"] },
+    { label:"💎 2등",  name:"2등",  mult:800,   p:1/5000,  combo:["💎","💎","💎"] },
+    { label:"🔔 3등",  name:"3등",  mult:50,    p:1/300,   combo:["🔔","🔔","🔔"] },
+    { label:"🍇 4등",  name:"4등",  mult:3,     p:1/25,    combo:["🍇","🍇","🍇"] },
+    { label:"🍒 5등",  name:"5등",  mult:0.5,   p:1/5,     combo:["🍒","🍒","🍇"] }
   ];
+
+  state.slotBet = LOTTO_MIN_BET;
 
   function renderLottoOdds(){
     const el = document.getElementById("lottoOdds");
     if(!el) return;
     const parts = LOTTO_TIERS.map(t => {
       const denom = Math.round(1/t.p).toLocaleString("en-US");
-      return `${t.combo.join("")} ${t.label} ${fmt(t.prize)} (1/${denom})`;
+      return `${t.combo.join("")} ${t.name} 베팅×${t.mult.toLocaleString("en-US")} (1/${denom})`;
     });
-    el.textContent = parts.join(" · ") + " · 1회당 확률";
+    el.textContent = parts.join(" · ") + " · 1회당 확률 · 베팅액은 아래에서 조절";
   }
+
+  function setBetFraction(frac){
+    const amount = frac === "min" ? LOTTO_MIN_BET : Math.floor(state.money * frac);
+    state.slotBet = Math.max(LOTTO_MIN_BET, amount);
+    renderBet();
+  }
+
+  function renderBet(){
+    const el = document.getElementById("betAmountText");
+    if(el) el.textContent = fmt(state.slotBet);
+  }
+
+  document.querySelectorAll(".bet-btn").forEach(btn=>{
+    const raw = btn.getAttribute("data-bet");
+    btn.addEventListener("click", ()=> setBetFraction(raw === "min" ? "min" : parseFloat(raw)));
+  });
 
   function pickLoseCombo(){
     const pool = SLOT_SYMBOLS.slice();
@@ -1432,10 +1469,11 @@
   }
 
   function drawLotto(){
-    if(state.money < LOTTO_COST) return;
+    const bet = state.slotBet;
+    if(state.money < bet) return;
     if(Date.now() < state.lottoCooldownUntil) return;
     state.lottoCooldownUntil = Date.now() + LOTTO_COOLDOWN_MS;
-    state.money -= LOTTO_COST;
+    state.money -= bet;
 
     const r = Math.random();
     let acc = 0, hit = null;
@@ -1444,6 +1482,7 @@
       if(r < acc){ hit = tier; break; }
     }
     const finalCombo = hit ? hit.combo : pickLoseCombo();
+    const prize = hit ? Math.floor(bet * hit.mult) : 0;
 
     const resultEl = document.getElementById("lottoResult");
     resultEl.textContent = "🎰 릴이 돌아가는 중...";
@@ -1452,17 +1491,17 @@
 
     spinReels(finalCombo, ()=>{
       if(hit){
-        addMoney(hit.prize);
-        resultEl.textContent = `🎉 ${hit.label} 당첨! +${fmt(hit.prize)}`;
+        addMoney(prize);
+        resultEl.textContent = `🎉 ${hit.label} 당첨! +${fmt(prize)}`;
         resultEl.className = "lotto-result win";
-        log(`슬롯머신 · ${hit.label} 당첨 +${fmt(hit.prize)}`, "gain");
-        if(hit.prize >= LOTTO_TIERS[2].prize){
-          showToast(`🎉 슬롯 당첨! (${hit.label}) +${fmt(hit.prize)}`, "gain", 5000);
+        log(`슬롯머신(베팅 ${fmt(bet)}) · ${hit.label} 당첨 +${fmt(prize)}`, "gain");
+        if(hit.mult >= LOTTO_TIERS[2].mult){
+          showToast(`🎉 슬롯 당첨! (${hit.label}) +${fmt(prize)}`, "gain", 5000);
         }
       } else {
         resultEl.textContent = "꽝... 다음 기회에 😢";
         resultEl.className = "lotto-result";
-        log("슬롯머신 · 꽝", "loss");
+        log(`슬롯머신(베팅 ${fmt(bet)}) · 꽝`, "loss");
       }
       render();
     });
@@ -1475,8 +1514,8 @@
       btn.disabled = true;
       btn.textContent = "🎰 돌아가는 중...";
     } else {
-      btn.disabled = state.money < LOTTO_COST;
-      btn.textContent = "🎰 슬롯머신 돌리기 ($10,000)";
+      btn.disabled = state.money < state.slotBet;
+      btn.textContent = "🎰 슬롯머신 돌리기 (" + fmt(state.slotBet) + ")";
     }
   }
   document.getElementById("lottoBtn").addEventListener("click", drawLotto);
@@ -1699,6 +1738,7 @@
   });
   state.modalOpen = false;
   renderLottoOdds();
+  renderBet();
   render();
   MARKET_KEYS.forEach(key=>{
     setupMarketChartHover(key);

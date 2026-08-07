@@ -453,7 +453,7 @@
 
 <div class="toast" id="toast"><span id="toastText"></span></div>
 
-<div class="month-gauge" id="monthGauge" title="다음 형비디아 시세 갱신까지">
+<div class="month-gauge" id="monthGauge" title="이번 달이 지나면 전체 시세 갱신">
   <span class="month-gauge-label">💹</span>
 </div>
 
@@ -656,7 +656,7 @@
 
   const SAVE_KEY = "hyeongsik_adventure_global_v1";
   const MARKET_HISTORY_MAX = 40;
-  const AGE_MS_PER_YEAR = 28571; // 현실 약 28.6초 = 게임 속 1년. 나이 = 32 + 경과시간/AGE_MS_PER_YEAR는 선형이라, "같은 실제 플레이 시간 기준 40대 완주 -> 60대 완주"는 실제 걸리는 시간과 무관하게 100초/년을 3.5배((60-32)/(40-32))만큼 나누면 됨. 백그라운드 탭은 브라우저가 타이머를 강하게 스로틀링해서 자동수입도 사실상 거의 안 쌓이므로 그 영향은 무시 가능
+  const AGE_MS_PER_YEAR = 18000 * 12; // 1개월 = 시장 갱신 주기(18초)와 동일하게 맞춤 -> 1년 = 216초. 우측 상단 게이지·시장 틱·캐릭터 나이가 전부 같은 "한 달" 시계를 공유함 (이 때문에 예전에 맞춘 "60대 완주" 페이스보다는 느려짐 - 완주 나이를 다시 맞추려면 게이지/나이 속도가 아니라 경제(목표 금액·업그레이드 값)를 조정해야 함)
 
   const BASE_CLICK_VALUE = 2500; // 환생 리셋 시에도 이 상수를 참조 - 밸런스 값이 하나로만 관리되게. 클릭만으로 밀어붙이지 못하게 대폭 너프 (기존 18,000)
   const STARTING_MONEY = 500000; // 클릭 너프로 초반이 너무 답답하지 않도록 지급하는 소액 시드머니
@@ -672,10 +672,10 @@
                 drift:0, vol:0.05, tickMs:18000, limitCooldownUntil:0, tradeFrozenUntil:0, hint:null, newsText:"", calm:false },
       gold:   { name:"S&P500", price:450000, minPrice:100000, unit:"주",
                 shares:0, avgPrice:0, dir:1, history:[], historyFlags:[],
-                drift:0.0015, vol:0.015, tickMs:54000, limitCooldownUntil:0, tradeFrozenUntil:0, hint:null, newsText:"", calm:true },
+                drift:0.0005, vol:0.005, tickMs:18000, limitCooldownUntil:0, tradeFrozenUntil:0, hint:null, newsText:"", calm:true },
       realty: { name:"마이애미 임대 콘도", price:50000000, minPrice:5000000, unit:"채",
                 shares:0, avgPrice:0, dir:1, history:[], historyFlags:[],
-                drift:0.0025, vol:0.008, tickMs:108000, limitCooldownUntil:0, tradeFrozenUntil:0, hint:null, newsText:"", calm:true,
+                drift:0.000417, vol:0.001333, tickMs:18000, limitCooldownUntil:0, tradeFrozenUntil:0, hint:null, newsText:"", calm:true,
                 rentYieldPerSec:0.00015, totalRentEarned:0 }
     },
     family: { kids:0 },
@@ -1431,7 +1431,7 @@
 
   // ---- Casino slot machine ---- (베팅액 가변, 릴이 실제로 돌아가는 연출 포함)
   const LOTTO_MIN_BET = 10000;
-  const SLOT_SYMBOLS = ["🍒","🍇","🔔","💎","7️⃣"];
+  const SLOT_SYMBOLS = ["🍒","🍇","🔔","💎","7️⃣","🕶️"];
   const SLOT_REEL_IDS = ["slotReel1","slotReel2","slotReel3"];
   const SPIN_STOP_DELAYS = [500, 850, 1250];
   const SPIN_INTERVAL_MS = 70;
@@ -1440,6 +1440,8 @@
     { label:"🎰 잭팟", name:"잭팟", mult:10000, p:1/50000, combo:["7️⃣","7️⃣","7️⃣"] },
     { label:"💎 2등",  name:"2등",  mult:800,   p:1/5000,  combo:["💎","💎","💎"] },
     { label:"🔔 3등",  name:"3등",  mult:50,    p:1/300,   combo:["🔔","🔔","🔔"] },
+    { label:"🕶️ 젠슨황 조우", name:"젠슨황 조우", mult:10, p:1/100, combo:["🕶️","🕶️","🕶️"],
+      flavor:"🕶️ 실리콘밸리에서 우연히 젠슨황을 만나 투자 인사이트를 얻었다! 베팅액의 10배 대박!" },
     { label:"🍇 4등",  name:"4등",  mult:3,     p:1/25,    combo:["🍇","🍇","🍇"] },
     { label:"🍒 5등",  name:"5등",  mult:0.5,   p:1/5,     combo:["🍒","🍒","🍇"] }
   ];
@@ -1530,9 +1532,9 @@
         addMoney(prize);
         resultEl.textContent = `🎉 ${hit.label} 당첨! +${fmt(prize)}`;
         resultEl.className = "lotto-result win";
-        log(`슬롯머신(베팅 ${fmt(bet)}) · ${hit.label} 당첨 +${fmt(prize)}`, "gain");
+        log(hit.flavor ? `${hit.flavor} (+${fmt(prize)})` : `슬롯머신(베팅 ${fmt(bet)}) · ${hit.label} 당첨 +${fmt(prize)}`, "gain");
         if(hit.mult >= LOTTO_TIERS[2].mult){
-          showToast(`🎉 슬롯 당첨! (${hit.label}) +${fmt(prize)}`, "gain", 5000);
+          showToast(hit.flavor || `🎉 슬롯 당첨! (${hit.label}) +${fmt(prize)}`, "gain", 5000);
         }
       } else {
         resultEl.textContent = "꽝... 다음 기회에 😢";

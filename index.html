@@ -359,6 +359,17 @@
   .toast.move{ background:linear-gradient(135deg,var(--brass),#b8862f); color:#1a1233; }
   @media (prefers-reduced-motion: reduce){ .toast{ transition:opacity .01s linear; } }
 
+  /* ---- Casino slot machine ---- */
+  .slot-reels{ display:flex; gap:8px; justify-content:center; margin-bottom:12px; }
+  .slot-reel{
+    flex:1; max-width:84px; aspect-ratio:1; display:flex; align-items:center; justify-content:center;
+    font-size:32px; border-radius:12px; border:2px solid var(--lavender);
+    background:rgba(201,182,228,.08); box-shadow: inset 0 2px 6px rgba(0,0,0,.25);
+  }
+  .slot-reel.spinning{ animation: reelBlur .08s linear infinite; }
+  @keyframes reelBlur{ 0%{ filter:blur(0px); } 50%{ filter:blur(2.5px); } 100%{ filter:blur(0px); } }
+  @media (prefers-reduced-motion: reduce){ .slot-reel.spinning{ animation:none; opacity:.6; } }
+
   /* ---- Lotto ---- */
   .lotto-btn{
     width:100%; padding:14px; border-radius:14px; border:2px dashed var(--lavender);
@@ -406,6 +417,7 @@
   .deed p{ font-size:15px; }
   .deed button{ font-size:15px; }
   .toast{ font-size:15px; }
+  .slot-reel{ font-size:36px; }
   .lotto-btn{ font-size:16px; }
   .lotto-result{ font-size:14px; }
   .lotto-odds{ font-size:11.5px; }
@@ -458,9 +470,14 @@
 
   <div class="ledger">
     <div class="ledger-head diary-font">🎰 카지노 · 인생 한 방</div>
-    <button class="lotto-btn" id="lottoBtn">🎰 슬롯머신 5회 돌리기 ($50,000)</button>
+    <div class="slot-reels" id="slotReels">
+      <span class="slot-reel" id="slotReel1">🍒</span>
+      <span class="slot-reel" id="slotReel2">🍇</span>
+      <span class="slot-reel" id="slotReel3">🔔</span>
+    </div>
+    <button class="lotto-btn" id="lottoBtn">🎰 슬롯머신 돌리기 ($10,000)</button>
     <div class="lotto-result" id="lottoResult">릴이 멈추길 기다리는 중...</div>
-    <div class="lotto-odds">🎰 잭팟 $500,000,000 (1/50,000) · 💎 2등 $8,000,000 (1/5,000) · 🔔 3등 $500,000 (1/300) · 🍇 4등 $30,000 (1/25) · 🍒 5등 $5,000 (1/5) · 회당 확률, 5회 동시 진행</div>
+    <div class="lotto-odds">🎰 잭팟 $500,000,000 (1/50,000) · 💎 2등 $8,000,000 (1/5,000) · 🔔 3등 $500,000 (1/300) · 🍇 4등 $30,000 (1/25) · 🍒 5등 $5,000 (1/5) · 1회당 확률</div>
   </div>
 
   <div class="ledger">
@@ -1350,17 +1367,52 @@
 
   document.getElementById("workBtn").addEventListener("click", doWork);
 
-  // ---- Casino slot machine ---- (5회 묶음 플레이, 로또 대비 상금은 낮추고 당첨 확률은 높임)
-  const LOTTO_COST = 50000;
-  const LOTTO_COUNT = 5;
-  const LOTTO_COOLDOWN_MS = 1000;
+  // ---- Casino slot machine ---- (1회 플레이, 릴이 실제로 돌아가는 연출 포함)
+  const LOTTO_COST = 10000;
+  const SLOT_SYMBOLS = ["🍒","🍇","🔔","💎","7️⃣"];
+  const SLOT_REEL_IDS = ["slotReel1","slotReel2","slotReel3"];
+  const SPIN_STOP_DELAYS = [500, 850, 1250];
+  const SPIN_INTERVAL_MS = 70;
+  const LOTTO_COOLDOWN_MS = 1400;
   const LOTTO_TIERS = [
-    { label:"🎰 잭팟", prize:500000000, p:1/50000 },
-    { label:"💎 2등",  prize:8000000,   p:1/5000 },
-    { label:"🔔 3등",  prize:500000,    p:1/300 },
-    { label:"🍇 4등",  prize:30000,     p:1/25 },
-    { label:"🍒 5등",  prize:5000,      p:1/5 }
+    { label:"🎰 잭팟", prize:500000000, p:1/50000, combo:["7️⃣","7️⃣","7️⃣"] },
+    { label:"💎 2등",  prize:8000000,   p:1/5000,  combo:["💎","💎","💎"] },
+    { label:"🔔 3등",  prize:500000,    p:1/300,   combo:["🔔","🔔","🔔"] },
+    { label:"🍇 4등",  prize:30000,     p:1/25,    combo:["🍇","🍇","🍇"] },
+    { label:"🍒 5등",  prize:5000,      p:1/5,     combo:["🍒","🍒","🍇"] }
   ];
+
+  function pickLoseCombo(){
+    const pool = SLOT_SYMBOLS.slice();
+    const combo = [];
+    while(combo.length < 3){
+      const s = pool[Math.floor(Math.random()*pool.length)];
+      if(!combo.includes(s)) combo.push(s);
+    }
+    return combo;
+  }
+
+  function spinReels(finalCombo, onDone){
+    const reels = SLOT_REEL_IDS.map(id => document.getElementById(id));
+    const stopped = [false, false, false];
+    reels.forEach(r => r.classList.add("spinning"));
+    const spinTimer = setInterval(()=>{
+      reels.forEach((r,i)=>{
+        if(!stopped[i]) r.textContent = SLOT_SYMBOLS[Math.floor(Math.random()*SLOT_SYMBOLS.length)];
+      });
+    }, SPIN_INTERVAL_MS);
+    SPIN_STOP_DELAYS.forEach((delay, i)=>{
+      setTimeout(()=>{
+        stopped[i] = true;
+        reels[i].textContent = finalCombo[i];
+        reels[i].classList.remove("spinning");
+        if(stopped.every(Boolean)){
+          clearInterval(spinTimer);
+          onDone();
+        }
+      }, delay);
+    });
+  }
 
   function drawLotto(){
     if(state.money < LOTTO_COST) return;
@@ -1368,34 +1420,35 @@
     state.lottoCooldownUntil = Date.now() + LOTTO_COOLDOWN_MS;
     state.money -= LOTTO_COST;
 
-    let totalPrize = 0;
-    const hits = [];
-    for(let i=0;i<LOTTO_COUNT;i++){
-      const r = Math.random();
-      let acc = 0, hit = null;
-      for(const tier of LOTTO_TIERS){
-        acc += tier.p;
-        if(r < acc){ hit = tier; break; }
-      }
-      if(hit){ hits.push(hit); totalPrize += hit.prize; }
+    const r = Math.random();
+    let acc = 0, hit = null;
+    for(const tier of LOTTO_TIERS){
+      acc += tier.p;
+      if(r < acc){ hit = tier; break; }
     }
-    addMoney(totalPrize);
+    const finalCombo = hit ? hit.combo : pickLoseCombo();
 
     const resultEl = document.getElementById("lottoResult");
-    if(hits.length){
-      const summary = hits.map(h=>h.label).join(", ");
-      resultEl.textContent = `🎉 ${hits.length}회 당첨 (${summary})! +${fmt(totalPrize)}`;
-      resultEl.className = "lotto-result win";
-      log(`슬롯머신 5회 플레이 · ${hits.length}회 당첨 (${summary}) +${fmt(totalPrize)}`, "gain");
-      if(hits.some(h => h.prize >= LOTTO_TIERS[2].prize)){
-        showToast(`🎉 슬롯 당첨! (${summary}) +${fmt(totalPrize)}`, "gain", 5000);
-      }
-    } else {
-      resultEl.textContent = "5회 다 꽝... 다음 기회에 😢";
-      resultEl.className = "lotto-result";
-      log("슬롯머신 5회 플레이 · 전부 꽝", "loss");
-    }
+    resultEl.textContent = "🎰 릴이 돌아가는 중...";
+    resultEl.className = "lotto-result";
     render();
+
+    spinReels(finalCombo, ()=>{
+      if(hit){
+        addMoney(hit.prize);
+        resultEl.textContent = `🎉 ${hit.label} 당첨! +${fmt(hit.prize)}`;
+        resultEl.className = "lotto-result win";
+        log(`슬롯머신 · ${hit.label} 당첨 +${fmt(hit.prize)}`, "gain");
+        if(hit.prize >= LOTTO_TIERS[2].prize){
+          showToast(`🎉 슬롯 당첨! (${hit.label}) +${fmt(hit.prize)}`, "gain", 5000);
+        }
+      } else {
+        resultEl.textContent = "꽝... 다음 기회에 😢";
+        resultEl.className = "lotto-result";
+        log("슬롯머신 · 꽝", "loss");
+      }
+      render();
+    });
   }
 
   function updateLottoButton(){
@@ -1403,10 +1456,10 @@
     const remainMs = state.lottoCooldownUntil - Date.now();
     if(remainMs > 0){
       btn.disabled = true;
-      btn.textContent = `잠시만요... (${(remainMs/1000).toFixed(1)}초)`;
+      btn.textContent = "🎰 돌아가는 중...";
     } else {
       btn.disabled = state.money < LOTTO_COST;
-      btn.textContent = "🎰 슬롯머신 5회 돌리기 ($50,000)";
+      btn.textContent = "🎰 슬롯머신 돌리기 ($10,000)";
     }
   }
   document.getElementById("lottoBtn").addEventListener("click", drawLotto);

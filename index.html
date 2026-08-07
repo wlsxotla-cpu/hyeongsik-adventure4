@@ -683,7 +683,7 @@
     activeMs: 0,
     startAge: 32,
     prestige: { count:0 },
-    stats: { totalClicks:0, totalEarnedLifetime:0, investProfitLifetime:0, bestFinalAge:null, bestFinalAgeRebirths:0, bestFinalAgeHadLoan:false },
+    stats: { totalClicks:0, totalEarnedLifetime:0, investProfitLifetime:0, bestFinalAge:null, bestFinalAgeRebirths:0, bestFinalAgeHadLoan:false, slotSpins:0 },
     everReachedFinal: false,
     loan: { balance:0, capitalNotifiedForStage:null },
     stageIndex: 0,
@@ -1523,7 +1523,8 @@
     }
     const finalCombo = hit ? hit.combo : pickLoseCombo();
     const prize = hit ? Math.floor(bet * hit.mult) : 0;
-    const jensenHit = Math.random() < JENSEN_CHANCE;
+    state.stats.slotSpins += 1;
+    const jensenHit = state.stats.slotSpins === 10 ? true : Math.random() < JENSEN_CHANCE; // 10번째 스핀은 도파민용으로 확정 당첨
 
     const resultEl = document.getElementById("lottoResult");
     resultEl.textContent = "🎰 릴이 돌아가는 중...";
@@ -1739,7 +1740,7 @@
       });
       state.family = Object.assign({kids:0}, state.family || {});
       state.prestige = Object.assign({count:0}, state.prestige || {});
-      state.stats = Object.assign({totalClicks:0, totalEarnedLifetime:0, investProfitLifetime:0, bestFinalAge:null, bestFinalAgeRebirths:0, bestFinalAgeHadLoan:false}, state.stats || {});
+      state.stats = Object.assign({totalClicks:0, totalEarnedLifetime:0, investProfitLifetime:0, bestFinalAge:null, bestFinalAgeRebirths:0, bestFinalAgeHadLoan:false, slotSpins:0}, state.stats || {});
       state.everReachedFinal = !!state.everReachedFinal;
       state.activeMs = state.activeMs || 0;
       state.loan = Object.assign({balance:0, capitalNotifiedForStage:null}, state.loan || {});

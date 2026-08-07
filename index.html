@@ -475,7 +475,7 @@
     </div>
     <button class="lotto-btn" id="lottoBtn">🎰 슬롯머신 돌리기 ($10,000)</button>
     <div class="lotto-result" id="lottoResult">릴이 멈추길 기다리는 중...</div>
-    <div class="lotto-odds">🎰 잭팟 $100,000,000 (1/50,000) · 💎 2등 $8,000,000 (1/5,000) · 🔔 3등 $500,000 (1/300) · 🍇 4등 $30,000 (1/25) · 🍒 5등 $5,000 (1/5) · 1회당 확률</div>
+    <div class="lotto-odds" id="lottoOdds"></div>
   </div>
 
   <div class="ledger">
@@ -1389,6 +1389,16 @@
     { label:"🍒 5등",  prize:5000,      p:1/5,     combo:["🍒","🍒","🍇"] }
   ];
 
+  function renderLottoOdds(){
+    const el = document.getElementById("lottoOdds");
+    if(!el) return;
+    const parts = LOTTO_TIERS.map(t => {
+      const denom = Math.round(1/t.p).toLocaleString("en-US");
+      return `${t.combo.join("")} ${t.label} ${fmt(t.prize)} (1/${denom})`;
+    });
+    el.textContent = parts.join(" · ") + " · 1회당 확률";
+  }
+
   function pickLoseCombo(){
     const pool = SLOT_SYMBOLS.slice();
     const combo = [];
@@ -1688,6 +1698,7 @@
     if(!m.historyFlags || m.historyFlags.length !== m.history.length) m.historyFlags = m.history.map(()=>false);
   });
   state.modalOpen = false;
+  renderLottoOdds();
   render();
   MARKET_KEYS.forEach(key=>{
     setupMarketChartHover(key);

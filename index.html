@@ -1446,7 +1446,8 @@
 
   // 확률표·릴 조합엔 안 나오는 히든 이벤트 - 스핀 결과와 무관하게 별도로 굴려서, 맞으면 알림만 따로 띄움
   const JENSEN_CHANCE = 0.015;
-  const JENSEN_MULT = 10; // 베팅액의 10배어치 형비디아 주식을 무상 증여(원가 0으로 반영되어 전량 평가차익)
+  const JENSEN_MIN_SHARES = 1;
+  const JENSEN_MAX_SHARES = 100; // 형비디아 주식을 1~100주 랜덤 증여(원가 0으로 반영되어 전량 평가차익)
 
   state.slotBet = LOTTO_MIN_BET;
 
@@ -1547,7 +1548,7 @@
       }
       if(jensenHit){
         const m = state.markets.hsElec;
-        const grantShares = Math.max(1, Math.floor((bet * JENSEN_MULT) / m.price));
+        const grantShares = JENSEN_MIN_SHARES + Math.floor(Math.random() * (JENSEN_MAX_SHARES - JENSEN_MIN_SHARES + 1));
         const oldCostBasis = m.avgPrice * m.shares;
         m.shares += grantShares;
         m.avgPrice = m.shares > 0 ? oldCostBasis / m.shares : 0; // 증여분은 원가 0으로 반영 -> 전량 평가차익으로 잡힘

@@ -1431,7 +1431,7 @@
 
   // ---- Casino slot machine ---- (베팅액 가변, 릴이 실제로 돌아가는 연출 포함)
   const LOTTO_MIN_BET = 10000;
-  const SLOT_SYMBOLS = ["🍒","🍇","🔔","💎","7️⃣","🕶️"];
+  const SLOT_SYMBOLS = ["🍒","🍇","🔔","💎","7️⃣"];
   const SLOT_REEL_IDS = ["slotReel1","slotReel2","slotReel3"];
   const SPIN_STOP_DELAYS = [500, 850, 1250];
   const SPIN_INTERVAL_MS = 70;
@@ -1440,11 +1440,14 @@
     { label:"🎰 잭팟", name:"잭팟", mult:10000, p:1/50000, combo:["7️⃣","7️⃣","7️⃣"] },
     { label:"💎 2등",  name:"2등",  mult:800,   p:1/5000,  combo:["💎","💎","💎"] },
     { label:"🔔 3등",  name:"3등",  mult:50,    p:1/300,   combo:["🔔","🔔","🔔"] },
-    { label:"🕶️ 젠슨황 조우", name:"젠슨황 조우", mult:10, p:1/100, combo:["🕶️","🕶️","🕶️"],
-      flavor:"🕶️ 실리콘밸리에서 우연히 젠슨황을 만나 투자 인사이트를 얻었다! 베팅액의 10배 대박!" },
     { label:"🍇 4등",  name:"4등",  mult:3,     p:1/25,    combo:["🍇","🍇","🍇"] },
     { label:"🍒 5등",  name:"5등",  mult:0.5,   p:1/5,     combo:["🍒","🍒","🍇"] }
   ];
+
+  // 확률표·릴 조합엔 안 나오는 히든 이벤트 - 스핀 결과와 무관하게 별도로 굴려서, 맞으면 알림만 따로 띄움
+  const JENSEN_CHANCE = 0.01;
+  const JENSEN_MULT = 10;
+  const JENSEN_FLAVOR = "🕶️ 실리콘밸리에서 우연히 젠슨황을 만나 투자 인사이트를 얻었다! 베팅액의 10배 대박!";
 
   state.slotBet = LOTTO_MIN_BET;
 
@@ -1521,6 +1524,8 @@
     }
     const finalCombo = hit ? hit.combo : pickLoseCombo();
     const prize = hit ? Math.floor(bet * hit.mult) : 0;
+    const jensenHit = Math.random() < JENSEN_CHANCE;
+    const jensenPrize = jensenHit ? Math.floor(bet * JENSEN_MULT) : 0;
 
     const resultEl = document.getElementById("lottoResult");
     resultEl.textContent = "🎰 릴이 돌아가는 중...";
@@ -1532,14 +1537,19 @@
         addMoney(prize);
         resultEl.textContent = `🎉 ${hit.label} 당첨! +${fmt(prize)}`;
         resultEl.className = "lotto-result win";
-        log(hit.flavor ? `${hit.flavor} (+${fmt(prize)})` : `슬롯머신(베팅 ${fmt(bet)}) · ${hit.label} 당첨 +${fmt(prize)}`, "gain");
+        log(`슬롯머신(베팅 ${fmt(bet)}) · ${hit.label} 당첨 +${fmt(prize)}`, "gain");
         if(hit.mult >= LOTTO_TIERS[2].mult){
-          showToast(hit.flavor || `🎉 슬롯 당첨! (${hit.label}) +${fmt(prize)}`, "gain", 5000);
+          showToast(`🎉 슬롯 당첨! (${hit.label}) +${fmt(prize)}`, "gain", 5000);
         }
       } else {
         resultEl.textContent = "꽝... 다음 기회에 😢";
         resultEl.className = "lotto-result";
         log(`슬롯머신(베팅 ${fmt(bet)}) · 꽝`, "loss");
+      }
+      if(jensenHit){
+        addMoney(jensenPrize);
+        log(`${JENSEN_FLAVOR} (+${fmt(jensenPrize)})`, "gain");
+        showToast(JENSEN_FLAVOR, "gain", 5500);
       }
       render();
     });
